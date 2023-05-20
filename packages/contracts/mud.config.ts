@@ -25,6 +25,22 @@ export default mudConfig({
     },
     Strength: {
       schema: "int32",
+    },
+    EntityInfo: {
+      schema: {
+        creator: "address",
+        name: "string",
+        metadataStr: "string",
+      }
+    },
+    EntityOwnership: {
+      keySchema: {
+        entityId: "bytes32",
+        owner: "address",
+      },
+      schema: {
+        balance: "uint256",
+      },
     }
   },
   modules: [

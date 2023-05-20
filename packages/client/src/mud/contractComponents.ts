@@ -52,5 +52,37 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    EntityInfo: (() => {
+      const tableId = new TableId("", "EntityInfo");
+      return defineComponent(
+        world,
+        {
+          creator: RecsType.String,
+          name: RecsType.String,
+          metadataStr: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    EntityOwnership: (() => {
+      const tableId = new TableId("", "EntityOwnership");
+      return defineComponent(
+        world,
+        {
+          balance: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

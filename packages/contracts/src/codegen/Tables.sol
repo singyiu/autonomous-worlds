@@ -6,3 +6,5 @@ pragma solidity >=0.8.0;
 import { Position, PositionData, PositionTableId } from "./tables/Position.sol";
 import { Health, HealthData, HealthTableId } from "./tables/Health.sol";
 import { Strength, StrengthTableId } from "./tables/Strength.sol";
+import { EntityInfo, EntityInfoData, EntityInfoTableId } from "./tables/EntityInfo.sol";
+import { EntityOwnership, EntityOwnershipTableId } from "./tables/EntityOwnership.sol";
