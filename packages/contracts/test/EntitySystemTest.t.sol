@@ -6,7 +6,7 @@ import { MudV2Test } from "@latticexyz/std-contracts/src/test/MudV2Test.t.sol";
 import { getKeysWithValue } from "@latticexyz/world/src/modules/keyswithvalue/getKeysWithValue.sol";
 
 import { IWorld } from "../src/codegen/world/IWorld.sol";
-import { EntityInfo, EntityInfoData, EntityOwnership } from "../src/codegen/Tables.sol";
+import { EntityInfo, EntityInfoData, EntityOwnership, EntityMarketplaceSell } from "../src/codegen/Tables.sol";
 import { addressToEntity } from "../src/Utils.sol";
 
 contract EntitySystemTest is MudV2Test {
@@ -16,6 +16,9 @@ contract EntitySystemTest is MudV2Test {
   uint256 testEntityOwnershipMintAmount01 = 10;
   address testEntityOwnershipTransferToAddress01 = address(0x70997970C51812dc3A010C7d01b50e0d17dc79C8);
   uint256 testEntityOwnershipTransferToAmount01 = 2;
+  uint256 entityMarketplaceSellRegisterUnitPrice01 = 1000;
+  uint256 entityMarketplaceSellRegisterAmount01 = 2;
+  uint256 entityMarketplaceBuyFromAmount01 = 2;
 
   function setUp() public override {
     super.setUp();
@@ -56,5 +59,17 @@ contract EntitySystemTest is MudV2Test {
       EntityOwnership.get(world, entityId01, testEntityOwnershipTransferToAddress01),
       testEntityOwnershipTransferToAmount01
     );
+
+    //entityMarketplaceSellRegister
+    world.entityMarketplaceSellRegister(
+      entityId01,
+      entityMarketplaceSellRegisterUnitPrice01,
+      entityMarketplaceSellRegisterAmount01
+    );
+    assertEq(
+      EntityMarketplaceSell.get(world, entityId01, address(this)).unitPrice,
+      entityMarketplaceSellRegisterUnitPrice01
+    );
+    assertEq(EntityMarketplaceSell.get(world, entityId01, address(this)).amount, entityMarketplaceSellRegisterAmount01);
   }
 }

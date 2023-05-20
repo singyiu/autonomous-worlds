@@ -8,3 +8,4 @@ import { Health, HealthData, HealthTableId } from "./tables/Health.sol";
 import { Strength, StrengthTableId } from "./tables/Strength.sol";
 import { EntityInfo, EntityInfoData, EntityInfoTableId } from "./tables/EntityInfo.sol";
 import { EntityOwnership, EntityOwnershipTableId } from "./tables/EntityOwnership.sol";
+import { EntityMarketplaceSell, EntityMarketplaceSellData, EntityMarketplaceSellTableId } from "./tables/EntityMarketplaceSell.sol";

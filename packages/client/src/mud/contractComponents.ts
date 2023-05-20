@@ -84,5 +84,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    EntityMarketplaceSell: (() => {
+      const tableId = new TableId("", "EntityMarketplac");
+      return defineComponent(
+        world,
+        {
+          unitPrice: RecsType.BigInt,
+          amount: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

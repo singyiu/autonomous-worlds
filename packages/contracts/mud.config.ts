@@ -41,7 +41,17 @@ export default mudConfig({
       schema: {
         balance: "uint256",
       },
-    }
+    },
+    EntityMarketplaceSell: {
+      keySchema: {
+        entityId: "bytes32",
+        seller: "address",
+      },
+      schema: {
+        unitPrice: "uint256",
+        amount: "uint256",
+      },
+    },
   },
   modules: [
     {
