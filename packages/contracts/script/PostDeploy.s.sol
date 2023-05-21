@@ -6,6 +6,7 @@ import { console } from "forge-std/console.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
 
 import "../src/defi/weth/WETH9.sol";
+import "../src/defi/mockyieldfarm/MockYieldFarm.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
@@ -19,6 +20,11 @@ contract PostDeploy is Script {
     WETH9 weth9 = new WETH9();
     IWorld(worldAddress).deFiSetWETH9(address(weth9));
     console.log("WETH9 deployed to:", IWorld(worldAddress).deFiGetWETH9Address());
+
+    // Deploy the MockYieldFarm contract
+    MockYieldFarm mockYieldFarm = new MockYieldFarm();
+    IWorld(worldAddress).deFiSetYieldFarm(address(mockYieldFarm));
+    console.log("MockYieldFarm deployed to:", IWorld(worldAddress).deFiGetYieldFarmAddress());
 
     vm.stopBroadcast();
   }
