@@ -117,5 +117,20 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    DeFi: (() => {
+      const tableId = new TableId("", "DeFi");
+      return defineComponent(
+        world,
+        {
+          contractAddress: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

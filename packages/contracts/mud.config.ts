@@ -61,6 +61,11 @@ export default mudConfig({
         balance: "uint256",
         lockedAmount: "uint256",
       },
+    },
+    DeFi: {
+      schema: {
+        contractAddress: "address",
+      },
     }
   },
   modules: [

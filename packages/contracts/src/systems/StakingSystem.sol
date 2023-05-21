@@ -2,15 +2,24 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { StakingRecord, StakingRecordData } from "../codegen/Tables.sol";
+import { StakingRecord, StakingRecordData, DeFi } from "../codegen/Tables.sol";
 
 import { addressToEntity } from "../Utils.sol";
 import { getKeysWithValue } from "@latticexyz/world/src/modules/keyswithvalue/getKeysWithValue.sol";
+import "../defi/weth/WETH9.sol";
 
 contract StakingSystem is System {
   function stakingDeposit(uint256 amount) public payable {
     require(amount > 0, "zero amount");
     require(msg.value == amount, "invalid deposit amount");
+
+    //wrap ETH to wETH
+    WETH9 weth9 = WETH9(payable(DeFi.get(keccak256(abi.encode("WETH9")))));
+    weth9.deposit{ value: amount }();
+
+    //deposit to yield vault
+
+    //update staking record
     StakingRecordData memory stakingRecord = StakingRecord.get(_msgSender());
     StakingRecord.set(
       _msgSender(),

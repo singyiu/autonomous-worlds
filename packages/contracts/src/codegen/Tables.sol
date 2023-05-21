@@ -10,3 +10,4 @@ import { EntityInfo, EntityInfoData, EntityInfoTableId } from "./tables/EntityIn
 import { EntityOwnership, EntityOwnershipTableId } from "./tables/EntityOwnership.sol";
 import { EntityMarketplaceSell, EntityMarketplaceSellData, EntityMarketplaceSellTableId } from "./tables/EntityMarketplaceSell.sol";
 import { StakingRecord, StakingRecordData, StakingRecordTableId } from "./tables/StakingRecord.sol";
+import { DeFi, DeFiTableId } from "./tables/DeFi.sol";
