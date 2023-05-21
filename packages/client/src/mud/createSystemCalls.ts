@@ -16,8 +16,18 @@ export function createSystemCalls(
     worldSend("move", [direction]);
   }
 
+  const stakingDeposit = () => {
+    worldSend("stakingDeposit", [1000, {value: 1000}]);
+  }
+
+  const stakingRedeem = () => {
+    worldSend("stakingRedeem", [200]);    
+  }
+
   return {
     spawn,
     move,
+    stakingDeposit,
+    stakingRedeem,
   };
 }

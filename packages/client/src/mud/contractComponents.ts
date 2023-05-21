@@ -100,5 +100,22 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    StakingRecord: (() => {
+      const tableId = new TableId("", "StakingRecord");
+      return defineComponent(
+        world,
+        {
+          totalProcessed: RecsType.BigInt,
+          balance: RecsType.BigInt,
+          lockedAmount: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

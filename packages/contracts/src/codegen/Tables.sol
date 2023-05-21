@@ -9,3 +9,4 @@ import { Strength, StrengthTableId } from "./tables/Strength.sol";
 import { EntityInfo, EntityInfoData, EntityInfoTableId } from "./tables/EntityInfo.sol";
 import { EntityOwnership, EntityOwnershipTableId } from "./tables/EntityOwnership.sol";
 import { EntityMarketplaceSell, EntityMarketplaceSellData, EntityMarketplaceSellTableId } from "./tables/EntityMarketplaceSell.sol";
+import { StakingRecord, StakingRecordData, StakingRecordTableId } from "./tables/StakingRecord.sol";

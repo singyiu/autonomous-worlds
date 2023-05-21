@@ -11,6 +11,8 @@ export function createControlsSystem(layer: PhaserLayer) {
     networkLayer: {
       systemCalls: {
         move,
+        stakingDeposit,
+        stakingRedeem,
       },
     },
   } = layer;
@@ -25,6 +27,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has("A"),
     () => {
       move(Direction.Left);
+      stakingRedeem();
     }
   );
 
@@ -39,6 +42,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has("D"),
     () => {
       move(Direction.Right);
+      stakingDeposit();
     }
   );
 }
