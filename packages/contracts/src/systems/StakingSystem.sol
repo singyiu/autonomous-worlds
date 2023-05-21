@@ -17,7 +17,7 @@ contract StakingSystem is System {
     WETH9 weth9 = WETH9(payable(DeFi.get(keccak256(abi.encode("WETH9")))));
     weth9.deposit{ value: amount }();
 
-    //deposit to yield vault
+    //deposit to yield farm
 
     //update staking record
     StakingRecordData memory stakingRecord = StakingRecord.get(_msgSender());

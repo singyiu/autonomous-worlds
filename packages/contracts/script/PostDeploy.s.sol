@@ -17,8 +17,8 @@ contract PostDeploy is Script {
 
     // Deploy the WETH9 contract
     WETH9 weth9 = new WETH9();
-    console.log("WETH9 deployed to:", address(weth9));
     IWorld(worldAddress).deFiSetWETH9(address(weth9));
+    console.log("WETH9 deployed to:", IWorld(worldAddress).deFiGetWETH9Address());
 
     vm.stopBroadcast();
   }
