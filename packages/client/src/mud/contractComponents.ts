@@ -105,9 +105,9 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          totalProcessed: RecsType.BigInt,
-          balance: RecsType.BigInt,
-          lockedAmount: RecsType.BigInt,
+          assetAmountProcessed: RecsType.BigInt,
+          shareBalance: RecsType.BigInt,
+          shareAmountLocked: RecsType.BigInt,
         },
         {
           metadata: {

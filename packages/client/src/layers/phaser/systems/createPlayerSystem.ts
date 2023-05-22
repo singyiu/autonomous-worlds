@@ -24,6 +24,8 @@ export function createPlayerSystem(layer: PhaserLayer) {
     },
   } = layer;
 
+  let playerStakingShareBalanceText = layer.scenes.Main.phaserScene.add.text(10, 10, "HELLO WORLD !!!");
+
   input.pointerdown$.subscribe((event) => {
     if (playerEntity && hasComponent(Position, playerEntity)) return;
 

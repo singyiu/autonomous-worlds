@@ -8,6 +8,7 @@ import { getKeysWithValue } from "@latticexyz/world/src/modules/keyswithvalue/ge
 import { IWorld } from "../src/codegen/world/IWorld.sol";
 import { StakingRecord, StakingRecordData } from "../src/codegen/Tables.sol";
 import { addressToEntity } from "../src/Utils.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract StakingSystemTest is MudV2Test {
   IWorld public world;
@@ -28,22 +29,15 @@ contract StakingSystemTest is MudV2Test {
     assertTrue(codeSize > 0);
   }
 
-  function testWETH9Exists() public {
-    uint256 codeSize;
-    address addr = world.deFiGetWETH9Address();
-    assembly {
-      codeSize := extcodesize(addr)
-    }
-    assertTrue(codeSize > 0);
-  }
-
   function testStakingSystem() public {
     //stakingDeposit
-    world.stakingDeposit{ value: testStakingDepositAmount01 }(testStakingDepositAmount01);
+    world.stakingDeposit{ value: testStakingDepositAmount01 }();
 
-    StakingRecordData memory data01 = StakingRecord.get(world, address(this));
-    assertEq(data01.balance, testStakingDepositAmount01);
-    uint256 wETHBalance = world.deFiGetWETH9BalanceOf(address(world));
-    assertEq(wETHBalance, testStakingDepositAmount01);
+    bytes32 stakingRecordKey = addressToEntity(address(this));
+    StakingRecordData memory data01 = StakingRecord.get(world, stakingRecordKey);
+    assertEq(data01.shareBalance, testStakingDepositAmount01);
+
+    address yieldFarmAddress = world.deFiGetContractAddressFromKey(keccak256(abi.encode("YEILD_FARM")));
+    assertEq(IERC20(yieldFarmAddress).balanceOf(address(world)), testStakingDepositAmount01);
   }
 }

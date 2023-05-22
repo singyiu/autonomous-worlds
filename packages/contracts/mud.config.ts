@@ -53,13 +53,10 @@ export default mudConfig({
       },
     },
     StakingRecord: {
-      keySchema: {
-        staker: "address",
-      },
       schema: {
-        totalProcessed: "uint256",
-        balance: "uint256",
-        lockedAmount: "uint256",
+        assetAmountProcessed: "uint256",
+        shareBalance: "uint256",
+        shareAmountLocked: "uint256",
       },
     },
     DeFi: {

@@ -17,7 +17,7 @@ export function createSystemCalls(
   }
 
   const stakingDeposit = () => {
-    worldSend("stakingDeposit", [1000, {value: 1000}]);
+    worldSend("stakingDeposit", [{value: 1000}]);
   }
 
   const stakingRedeem = () => {
