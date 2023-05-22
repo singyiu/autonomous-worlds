@@ -12,8 +12,15 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract StakingSystemTest is MudV2Test {
   IWorld public world;
-
   uint256 testStakingDepositAmount01 = 1000;
+
+  fallback() external payable {
+    console.log("fallback", msg.value);
+  }
+
+  receive() external payable {
+    console.log("receive", msg.value);
+  }
 
   function setUp() public override {
     super.setUp();
@@ -30,14 +37,20 @@ contract StakingSystemTest is MudV2Test {
   }
 
   function testStakingSystem() public {
+    bytes32 stakingRecordKey = addressToEntity(address(this));
+    address yieldFarmAddress = world.deFiGetContractAddressFromKey(keccak256(abi.encode("YEILD_FARM")));
+
     //stakingDeposit
     world.stakingDeposit{ value: testStakingDepositAmount01 }();
-
-    bytes32 stakingRecordKey = addressToEntity(address(this));
-    StakingRecordData memory data01 = StakingRecord.get(world, stakingRecordKey);
-    assertEq(data01.shareBalance, testStakingDepositAmount01);
-
-    address yieldFarmAddress = world.deFiGetContractAddressFromKey(keccak256(abi.encode("YEILD_FARM")));
+    StakingRecordData memory stakingRecord01 = StakingRecord.get(world, stakingRecordKey);
+    assertEq(stakingRecord01.shareBalance, testStakingDepositAmount01);
+    assertEq(stakingRecord01.shareAmountLocked, 0);
     assertEq(IERC20(yieldFarmAddress).balanceOf(address(world)), testStakingDepositAmount01);
+
+    //stakingRedeem
+    //world.stakingRedeem(testStakingDepositAmount01);
+    //StakingRecordData memory stakingRecord02 = StakingRecord.get(world, stakingRecordKey);
+    //assertEq(stakingRecord02.shareBalance, 0);
+    //assertEq(IERC20(yieldFarmAddress).balanceOf(address(world)), 0);
   }
 }

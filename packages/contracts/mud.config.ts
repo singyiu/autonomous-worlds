@@ -10,6 +10,11 @@ export default mudConfig({
       "Right",
     ]
   },
+  systems: {
+    PrivateDeFiSystem: {
+      openAccess: false,
+    }
+  },
   tables: {
     Position: {
       schema: {
