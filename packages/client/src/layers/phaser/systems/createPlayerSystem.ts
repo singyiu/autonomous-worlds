@@ -85,7 +85,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
     textObj.setComponent({
       id: 'position',
       once: (text) => {
-        text.setPosition(pixelPosition.x - 8, pixelPosition.y - 32);
+        text.setPosition(pixelPosition.x - 20, pixelPosition.y - 36);
         text.setVisible(true);
       }
     });
@@ -97,12 +97,9 @@ export function createPlayerSystem(layer: PhaserLayer) {
     textObj.setComponent({
       id: 'text',
       once: (text) => {
-        text.setText(`S ${stakingRecord.shareBalance}\nU ${stakingRecord.shareUnlocked}`);
+        text.setText(`Staked ${stakingRecord.shareBalance}\nUnlocked ${stakingRecord.shareUnlocked}`);
       }
     });
-
-    //const defiSingleton = getComponentValueStrict(DeFiSingleton, singletonEntity);
-    //textTVL?.setText(`TVL: ${defiSingleton.totalAssetAmount} ETH`);
   });
 
   defineSystem(world, [Has(DeFiSingleton)], ({ entity }) => {
