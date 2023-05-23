@@ -12,7 +12,7 @@ export function createControlsSystem(layer: PhaserLayer) {
       systemCalls: {
         move,
         stakingDeposit,
-        stakingRedeem,
+        stakingRedeemAll,
       },
     },
   } = layer;
@@ -27,7 +27,6 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has("A"),
     () => {
       move(Direction.Left);
-      stakingRedeem();
     }
   );
 
@@ -42,7 +41,20 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has("D"),
     () => {
       move(Direction.Right);
+    }
+  );
+
+  input.onKeyPress(
+    keys => keys.has("P"),
+    () => {
       stakingDeposit();
     }
   );
+
+  input.onKeyPress(
+    keys => keys.has("L"),
+    () => {
+      stakingRedeemAll();
+    }
+  );  
 }

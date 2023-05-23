@@ -61,13 +61,20 @@ export default mudConfig({
       schema: {
         assetAmountProcessed: "uint256",
         shareBalance: "uint256",
-        shareAmountLocked: "uint256",
+        shareUnlocked: "uint256",
       },
     },
     DeFi: {
       schema: {
         contractAddress: "address",
       },
+    },
+    DeFiSingleton: {
+      keySchema: {},
+      schema: {
+        totalAssetAmount: "uint256",
+        totalShareAmount: "uint256",
+      }
     }
   },
   modules: [

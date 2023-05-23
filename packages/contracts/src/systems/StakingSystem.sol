@@ -26,23 +26,58 @@ contract StakingSystem is System {
       stakingRecordKey,
       stakingRecord.assetAmountProcessed + assetAmount,
       stakingRecord.shareBalance + shareAmount,
-      stakingRecord.shareAmountLocked
+      stakingRecord.shareUnlocked
     );
   }
 
-  function stakingRedeem(uint256 shareAmount) public {
+  function stakingRedeem(uint256 shareAmount) public returns (uint256 assetAmount) {
     require(shareAmount > 0, "zero amount");
     bytes32 stakingRecordKey = addressToEntity(_msgSender());
     StakingRecordData memory stakingRecord = StakingRecord.get(stakingRecordKey);
-    require((stakingRecord.shareBalance - stakingRecord.shareAmountLocked) >= shareAmount, "insufficient balance");
+    require(stakingRecord.shareUnlocked >= shareAmount, "insufficient unlocked share");
+    require(stakingRecord.shareBalance >= shareAmount, "insufficient balance");
 
     //update staking record
+    StakingRecord.setShareUnlocked(stakingRecordKey, stakingRecord.shareUnlocked - shareAmount);
     StakingRecord.setShareBalance(stakingRecordKey, stakingRecord.shareBalance - shareAmount);
 
     //redeem from yield farm
-    uint256 assetAmount = IWorld(_world())._privateDeFiRedeemFromYieldFarm(shareAmount);
+    assetAmount = IWorld(_world())._privateDeFiRedeemFromYieldFarm(shareAmount);
 
     //transfer ETH to _msgSender()
     payable(_msgSender()).transfer(shareAmount);
+  }
+
+  function stakingRedeemAll() public returns (uint256 assetAmount) {
+    bytes32 stakingRecordKey = addressToEntity(_msgSender());
+    StakingRecordData memory stakingRecord = StakingRecord.get(stakingRecordKey);
+
+    uint256 shareAmount = stakingRecord.shareUnlocked;
+    require(shareAmount > 0, "zero amount");
+    require(stakingRecord.shareBalance >= shareAmount, "insufficient balance");
+
+    //update staking record
+    StakingRecord.setShareUnlocked(stakingRecordKey, stakingRecord.shareUnlocked - shareAmount);
+    StakingRecord.setShareBalance(stakingRecordKey, stakingRecord.shareBalance - shareAmount);
+
+    //redeem from yield farm
+    assetAmount = IWorld(_world())._privateDeFiRedeemFromYieldFarm(shareAmount);
+
+    //transfer ETH to _msgSender()
+    payable(_msgSender()).transfer(shareAmount);
+  }
+
+  function stakingHasUnlockableShare(address account) public view returns (bool) {
+    require(account != address(0), "zero address");
+    bytes32 stakingRecordKey = addressToEntity(account);
+    StakingRecordData memory stakingRecord = StakingRecord.get(stakingRecordKey);
+    return stakingRecord.shareBalance > stakingRecord.shareUnlocked;
+  }
+
+  function stakingHasAssetAmountProcessed(address account) public view returns (bool) {
+    require(account != address(0), "zero address");
+    bytes32 stakingRecordKey = addressToEntity(account);
+    StakingRecordData memory stakingRecord = StakingRecord.get(stakingRecordKey);
+    return stakingRecord.assetAmountProcessed > 0;
   }
 }

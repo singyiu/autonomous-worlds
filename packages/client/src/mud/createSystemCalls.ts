@@ -20,14 +20,14 @@ export function createSystemCalls(
     worldSend("stakingDeposit", [{value: 1000}]);
   }
 
-  const stakingRedeem = () => {
-    worldSend("stakingRedeem", [200]);    
+  const stakingRedeemAll = () => {
+    worldSend("stakingRedeemAll", []);    
   }
 
   return {
     spawn,
     move,
     stakingDeposit,
-    stakingRedeem,
+    stakingRedeemAll,
   };
 }

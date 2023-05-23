@@ -71,6 +71,19 @@ export const phaserConfig = {
         },
       },
     }),
+    [Scenes.UI]: defineSceneConfig({
+      /*
+      create: (thisScene) => {
+        const textTVL = thisScene.add.text(10, 10, "TVL: 0");
+        //textTVL.setScrollFactor(0);
+      },
+      */
+      assets: {},
+      maps: {},
+      sprites: {},
+      animations: [],
+      tilesets: {},
+    }),
   },
   scale: defineScaleConfig({
     parent: "phaser-game",

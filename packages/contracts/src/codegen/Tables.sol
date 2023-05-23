@@ -11,3 +11,4 @@ import { EntityOwnership, EntityOwnershipTableId } from "./tables/EntityOwnershi
 import { EntityMarketplaceSell, EntityMarketplaceSellData, EntityMarketplaceSellTableId } from "./tables/EntityMarketplaceSell.sol";
 import { StakingRecord, StakingRecordData, StakingRecordTableId } from "./tables/StakingRecord.sol";
 import { DeFi, DeFiTableId } from "./tables/DeFi.sol";
+import { DeFiSingleton, DeFiSingletonData, DeFiSingletonTableId } from "./tables/DeFiSingleton.sol";

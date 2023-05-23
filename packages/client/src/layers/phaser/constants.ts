@@ -1,5 +1,6 @@
 export enum Scenes {
   Main = "Main",
+  UI = "UI",
 }
 
 export enum Maps {

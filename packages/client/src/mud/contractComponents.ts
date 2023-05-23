@@ -107,7 +107,7 @@ export function defineContractComponents(world: World) {
         {
           assetAmountProcessed: RecsType.BigInt,
           shareBalance: RecsType.BigInt,
-          shareAmountLocked: RecsType.BigInt,
+          shareUnlocked: RecsType.BigInt,
         },
         {
           metadata: {
@@ -123,6 +123,22 @@ export function defineContractComponents(world: World) {
         world,
         {
           contractAddress: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    DeFiSingleton: (() => {
+      const tableId = new TableId("", "DeFiSingleton");
+      return defineComponent(
+        world,
+        {
+          totalAssetAmount: RecsType.BigInt,
+          totalShareAmount: RecsType.BigInt,
         },
         {
           metadata: {

@@ -9,22 +9,27 @@ export function createPlayerSystem(layer: PhaserLayer) {
     networkLayer: {
       components: {
         Position,
+        StakingRecord,
+        DeFiSingleton,
       },
       systemCalls: {
         spawn
       },
       playerEntity,
+      singletonEntity,
     },
     scenes: {
       Main: {
         objectPool,
         input,
         camera,
+        phaserScene,
       },
     },
   } = layer;
 
-  let playerStakingShareBalanceText = layer.scenes.Main.phaserScene.add.text(10, 10, "HELLO WORLD !!!");
+  const textControl = phaserScene?.add?.text(-600, -220, "Movement: WASD, Staking: P, Redeem: L");
+  const textTVL = phaserScene?.add?.text(-600, -180, "TVL: 0 ETH");
 
   input.pointerdown$.subscribe((event) => {
     if (playerEntity && hasComponent(Position, playerEntity)) return;
@@ -40,11 +45,18 @@ export function createPlayerSystem(layer: PhaserLayer) {
 
   defineEnterSystem(world, [Has(Position)], ({ entity }) => {
     const playerObj = objectPool.get(entity, "Sprite");
-
     playerObj.setComponent({
       id: 'animation',
       once: (sprite) => {
         sprite.play(Animations.GolemIdle);
+      }
+    });
+
+    const textObj = objectPool.get(entity+"StakingRecordText", "Text");
+    textObj.setComponent({
+      id: 'visible',
+      once: (text) => {
+        text.setVisible(false);
       }
     });
   });
@@ -60,11 +72,41 @@ export function createPlayerSystem(layer: PhaserLayer) {
       once: (sprite) => {
         sprite.setPosition(pixelPosition.x, pixelPosition.y);
 
+        /*
         const isPlayer = entity === playerEntity;
         if (isPlayer) {
           camera.centerOn(pixelPosition.x, pixelPosition.y);
         }
+        */
       }
     });
+
+    const textObj = objectPool.get(entity+"StakingRecordText", "Text");
+    textObj.setComponent({
+      id: 'position',
+      once: (text) => {
+        text.setPosition(pixelPosition.x - 8, pixelPosition.y - 32);
+        text.setVisible(true);
+      }
+    });
+  });
+
+  defineSystem(world, [Has(StakingRecord)], ({ entity }) => {
+    const stakingRecord = getComponentValueStrict(StakingRecord, entity);
+    const textObj = objectPool.get(entity+"StakingRecordText", "Text");
+    textObj.setComponent({
+      id: 'text',
+      once: (text) => {
+        text.setText(`S ${stakingRecord.shareBalance}\nU ${stakingRecord.shareUnlocked}`);
+      }
+    });
+
+    //const defiSingleton = getComponentValueStrict(DeFiSingleton, singletonEntity);
+    //textTVL?.setText(`TVL: ${defiSingleton.totalAssetAmount} ETH`);
+  });
+
+  defineSystem(world, [Has(DeFiSingleton)], ({ entity }) => {
+    const defiSingleton = getComponentValueStrict(DeFiSingleton, singletonEntity);
+    textTVL?.setText(`TVL: ${defiSingleton.totalAssetAmount} ETH`);
   });
 }

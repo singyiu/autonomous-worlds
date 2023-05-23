@@ -44,13 +44,7 @@ contract StakingSystemTest is MudV2Test {
     world.stakingDeposit{ value: testStakingDepositAmount01 }();
     StakingRecordData memory stakingRecord01 = StakingRecord.get(world, stakingRecordKey);
     assertEq(stakingRecord01.shareBalance, testStakingDepositAmount01);
-    assertEq(stakingRecord01.shareAmountLocked, 0);
+    assertEq(stakingRecord01.shareUnlocked, 0);
     assertEq(IERC20(yieldFarmAddress).balanceOf(address(world)), testStakingDepositAmount01);
-
-    //stakingRedeem
-    //world.stakingRedeem(testStakingDepositAmount01);
-    //StakingRecordData memory stakingRecord02 = StakingRecord.get(world, stakingRecordKey);
-    //assertEq(stakingRecord02.shareBalance, 0);
-    //assertEq(IERC20(yieldFarmAddress).balanceOf(address(world)), 0);
   }
 }
